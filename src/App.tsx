@@ -8,9 +8,8 @@ import { LinesPage } from './routes/LinesPage';
 import { useWeb3React } from "@web3-react/core";
 import { injectedConnector } from "./core/connectors";
 import { UnsupportedChainIdError } from '@web3-react/core';
-import { SimpleTextPage } from "./routes/SimpleTextPage";
 import styled from "styled-components";
-import { FlatButton } from "./core/styling";
+import { FlatButton, PageContainer } from "./core/styling";
 import { WithdrawPage } from "./routes/WithdrawPage";
 
 const Header = styled.nav`
@@ -32,9 +31,6 @@ li {
 }
 `
 
-const PageContainer = styled.div`
-width: 100%;
-margin: 100px 0`
 
 const Footer = styled.footer`
 width: 100%;
@@ -73,12 +69,12 @@ function App() {
       </Header>
       <PageContainer>
         <Routes>
-          <Route path="/" element={<SimpleTextPage text ="Hello world!" />} />
+          <Route path="/" element={<PageContainer >"Hello world!"</PageContainer>} />
           <Route path="/withdraw" element={<WithdrawPage />} />
           {active ?
             <Route path="/wall/:from_uid/:amount" element={<LinesPage />} />
             :
-            <Route path="/wall/:from_uid/:amount" element={<SimpleTextPage text={isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"} />} />
+            <Route path="/wall/:from_uid/:amount" element={<PageContainer>{isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"}</PageContainer>} />
           }
         </Routes>
       </PageContainer>
