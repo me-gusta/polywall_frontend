@@ -8,10 +8,9 @@ import { LinesPage } from './routes/LinesPage';
 import { useWeb3React } from "@web3-react/core";
 import { injectedConnector } from "./core/connectors";
 import { UnsupportedChainIdError } from '@web3-react/core';
-import { PlaceholderPage } from "./routes/PlaceholderPage";
+import { SimpleTextPage } from "./routes/SimpleTextPage";
 import styled from "styled-components";
 import { FlatButton } from "./core/styling";
-import { IndexPage } from "./routes/IndexPage";
 import { WithdrawPage } from "./routes/WithdrawPage";
 
 const Header = styled.nav`
@@ -61,7 +60,7 @@ function App() {
             <Link to="/wall/-5/30">The Wall</Link>
           </li>
           <li>
-            <Link to="/wall/-5/30">Withdraw</Link>
+            <Link to="/withdraw">Withdraw</Link>
           </li>
           <li>
             {active ?
@@ -74,12 +73,12 @@ function App() {
       </Header>
       <PageContainer>
         <Routes>
-          <Route path="/" element={<IndexPage />} />
+          <Route path="/" element={<SimpleTextPage text ="Hello world!" />} />
           <Route path="/withdraw" element={<WithdrawPage />} />
           {active ?
             <Route path="/wall/:from_uid/:amount" element={<LinesPage />} />
             :
-            <Route path="/wall/:from_uid/:amount" element={<PlaceholderPage text={isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"} />} />
+            <Route path="/wall/:from_uid/:amount" element={<SimpleTextPage text={isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"} />} />
           }
         </Routes>
       </PageContainer>
