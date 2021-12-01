@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: 'Azeret Mono', monospace;
+}
+
+:root {
+  --main-bg: #272727;
+  --placeholder: #474747;
+  --main-text: #ddd;
+  --theme: #B38D97;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 20px;
+  font-family: 'Azeret Mono', monospace;
+  background-color: var(--main-bg);
+  color: var(--main-text)
+}
+
+a {
+  color: var(--main-text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--theme);
+
+}
