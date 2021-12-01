@@ -8,27 +8,42 @@ import { LinesPage } from './routes/LinesPage';
 import { useWeb3React } from "@web3-react/core";
 import { injectedConnector } from "./core/connectors";
 import { UnsupportedChainIdError } from '@web3-react/core';
-import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "./core/slices/editorSlice";
 import { PlaceholderPage } from "./routes/PlaceholderPage";
 import styled from "styled-components";
 import { FlatButton } from "./core/styling";
 import { IndexPage } from "./routes/IndexPage";
+import { WithdrawPage } from "./routes/WithdrawPage";
 
-const Navigation = styled.nav`
+const Header = styled.nav`
 width: 100;
 display: flex;
-& ul {
+padding: 0 50px;
+`
+
+const NavUl = styled.ul`
+display: flex;
+gap: 30px;
+height: 30px;
+li {
   display: flex;
-  gap: 10px;
-  li {
-    list-style: none;
-    display: flex;
-    align-items: center;
-  }
+  align-items: start;
+  list-style: none;
+  display: flex;
+  align-items: center;
 }
 `
 
+const PageContainer = styled.div`
+width: 100%;
+margin: 100px 0`
+
+const Footer = styled.footer`
+width: 100%;
+margin: auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+`
 
 function App() {
   const { active, error, activate } = useWeb3React()
@@ -37,34 +52,47 @@ function App() {
 
   return (
     <Router>
-      <Navigation>
-        <ul>
+      <Header>
+        <NavUl>
           <li>
             <Link to="/">About</Link>
           </li>
           <li>
-            <Link to="/wall/-5/30">PolyWall</Link>
+            <Link to="/wall/-5/30">The Wall</Link>
+          </li>
+          <li>
+            <Link to="/wall/-5/30">Withdraw</Link>
+          </li>
+          <li>
+            {active ?
+              <span>Connected</span>
+              :
+              <FlatButton onClick={() => activate(injectedConnector)}>Connect</FlatButton>
+            }
+          </li>
+        </NavUl>
+      </Header>
+      <PageContainer>
+        <Routes>
+          <Route path="/" element={<IndexPage />} />
+          <Route path="/withdraw" element={<WithdrawPage />} />
+          {active ?
+            <Route path="/wall/:from_uid/:amount" element={<LinesPage />} />
+            :
+            <Route path="/wall/:from_uid/:amount" element={<PlaceholderPage text={isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"} />} />
+          }
+        </Routes>
+      </PageContainer>
+      <Footer>
+        <NavUl>
+          <li>
+            <a href="#" target="_blank">PolygonScan</a>
           </li>
           <li>
             <a href="#" target="_blank">GitHub</a>
           </li>
-          <li>
-            {active ? 
-              <span>Connected</span>
-            : 
-            <FlatButton onClick={() => activate(injectedConnector)}>Connect</FlatButton> 
-            }
-          </li>
-        </ul>
-      </Navigation>
-      <Routes>
-      <Route path="/" element={<IndexPage />} />
-        {active ?
-          <Route path="/wall/:from_uid/:amount" element={<LinesPage />} />
-          : 
-          <Route path="/wall/:from_uid/:amount" element={<PlaceholderPage text={isUnsupportedChainIdError ? "Please switch to the Polygon blockchain" : "Connect your Metamask wallet to proceed"} />} />
-        }
-      </Routes>
+        </NavUl>
+      </Footer>
     </Router>
   );
 }
