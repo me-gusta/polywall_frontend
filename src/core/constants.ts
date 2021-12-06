@@ -4,7 +4,7 @@ export const LINE_LENGTH = 100
 export const LINE_PRICE = 0.001
 export const LINES_PER_TX = 10
 
-export const WALL_ADDRESS = "0xfce92D3E4F08c683648563DA36B15681C8E04B55"
+export const WALL_ADDRESS = "0x20f3D2E55c4048878387eC69Cd00172F4dE18520"
 export const WALL_ABI = new Interface([
   {
     "inputs": [
@@ -36,12 +36,6 @@ export const WALL_ABI = new Interface([
         "internalType": "string",
         "name": "str",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "int256",
-        "name": "refTo",
-        "type": "int256"
       },
       {
         "indexed": false,
@@ -80,6 +74,19 @@ export const WALL_ABI = new Interface([
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "devAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "int256",
@@ -107,11 +114,6 @@ export const WALL_ABI = new Interface([
             "type": "string"
           },
           {
-            "internalType": "int256",
-            "name": "refTo",
-            "type": "int256"
-          },
-          {
             "internalType": "uint256",
             "name": "edits",
             "type": "uint256"
@@ -120,6 +122,25 @@ export const WALL_ABI = new Interface([
         "internalType": "struct TheWall.ExportLine[]",
         "name": "out",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "pendingMatic",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -141,6 +162,13 @@ export const WALL_ABI = new Interface([
     "name": "uploadLines",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ])

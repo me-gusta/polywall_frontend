@@ -1,21 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 
+
+@font-face {
+  font-family: 'Blox';
+  src: url('./fonts/Blox/Blox.ttf') format('ttf'),
+  url('./fonts/Blox/Blox.woff') format('woff'),
+  url('./fonts/Blox/Blox.woff2') format('woff2');
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: 'Azeret Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 :root {
   --main-bg: #272727;
-  --placeholder: #474747;
-  --main-text: #ddd;
-  --theme: #B38D97;
+  --disabled: #474747;
+  --main-text: rgb(196, 196, 196);
+  --theme: #854a76;
+  --theme2: #D18ABF;
   --font-size: 16px;
+
+  --polygon: #8247e5;
+  --github1: #0d1117;
+  --github2: #f0f6fc;
+}
+
+html, body, #root {
+  height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: 'IBM Plex Mono', monospace;
   font-size: var(--font-size);
   background-color: var(--main-bg);
   color: var(--main-text)
@@ -33,4 +49,21 @@ a {
 a:hover {
   color: var(--theme);
 
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

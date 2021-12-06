@@ -6,7 +6,7 @@ import styled from "styled-components"
 import { Line } from "../components/Line"
 import { LINES_PER_TX, LINE_PRICE, WALL_ABI, WALL_ADDRESS } from "../core/constants"
 import { useWeb3React } from "@web3-react/core";
-import { ethers, utils } from "ethers"
+import { ethers } from "ethers"
 import { LineConfig } from "../core/types";
 import BN from "bn.js"
 import { useSelector } from "react-redux"
@@ -26,8 +26,9 @@ max-width: 1000px;
 
 const StatsContainer = styled.div`
 display: flex;
-justify-content: space-between;
 flex-direction: column;
+align-items: end;
+justify-content: space-between;
 gap: 10px;`
 
 const LinesContainer = styled.div`
@@ -35,11 +36,12 @@ display: flex;
 flex-direction: column;
 `
 
-const MoreDiv = styled.div`
-display: flex;
-justify-content: center;
+const MoreDiv = styled.span`
+// display: flex;
+// justify-content: center;
 cursor: pointer;
-color: var(--theme)`
+color: var(--theme);
+width: fit-content;`
 
 const LoadingDotsContainer = styled.div`
 display: flex;
@@ -59,13 +61,6 @@ type LinesInfo = {
     endUid: BN
 }
 
-const updateLineFilter = {
-    address: WALL_ADDRESS,
-    topics: [
-        utils.id("LineUpdated(int256,string,int256,uint256)"),
-        null,
-    ]
-}
 
 export const LinesPage = () => {
     const { from_uid, amount } = useParams();
@@ -94,7 +89,7 @@ export const LinesPage = () => {
             wallContract.getLines(requestParams.from_uid, requestParams.amount).then((rawLines: LineConfig[]) => {
                 addLines(rawLines)
             })
-            wallContract.on('LineUpdated', (uid: BN, str: string, refTo: BN, edits: BN) => {
+            wallContract.on('LineUpdated', (uid: BN, str: string, edits: BN) => {
                 replaceLine({ uid: uid, str: str, edits: edits })
             })
         }
@@ -171,46 +166,46 @@ export const LinesPage = () => {
         }
     }
 
-    return <PageContainer>
-        {linesInfo.lines.length ?
-            <StatsContainer>
-                <div>Total: {editedLines.length} lines edited -&gt; {editedLinesPrices.toString()} MATIC</div>
-                <div>
-                    <FlatButton onClick={commitLines}>Commit</FlatButton>
-                </div>
-            </StatsContainer>
-            : ""
-        }
-        {linesInfo.lines.length ?
-            <LinesContainer>
-                <MoreDiv onClick={_ => setRequestParams({ from_uid: linesInfo.startUid.toNumber() - 20, amount: 20 })}>load more up...</MoreDiv>
-                <br />
-                <table>
-                    <tbody>
-                        {linesInfo.lines}
-                    </tbody>
-                </table>
-                <br />
-                <MoreDiv onClick={_ => setRequestParams({ from_uid: linesInfo.endUid.toNumber() + 1, amount: 20 })}>load more down...</MoreDiv>
-            </LinesContainer>
-            :
-            <LoadingDotsContainer><LoadingDots /></LoadingDotsContainer>
-        }
-        {isOverlay ?
-            <InfoOverlay>
-                {editedLines.length ?
-                    [
-                        <span key={0}>Your transactions are being prepared!</span>,
-                        <span key={1}>Lines edited: {editedLines.length}</span>,
-                        <span key={2}>Total MATIC: {editedLinesPrices.toString()}</span>,
-                        <span key={3}>Transactions count: {Math.ceil(editedLines.length / LINES_PER_TX)}</span>
-                    ]
-                    : <span>Please confirm all transactions.</span>}
-                <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                    <LoadingDots />
-                </div>
-            </InfoOverlay>
-            : ''
-        }
-    </PageContainer>
+    return (
+        <PageContainer>
+            {linesInfo.lines.length ?
+                <StatsContainer>
+                    <div>Total: {editedLines.length} lines edited -&gt; {editedLinesPrices.toString()} MATIC</div>
+                    <div>
+                        <FlatButton onClick={commitLines}>Commit</FlatButton>
+                    </div>
+                </StatsContainer>
+                : ""
+            }
+            {linesInfo.lines.length ?
+                <LinesContainer>
+                    <MoreDiv onClick={_ => setRequestParams({ from_uid: linesInfo.startUid.toNumber() - 20, amount: 20 })}>load more up...</MoreDiv>
+                    <table>
+                        <tbody>
+                            {linesInfo.lines}
+                        </tbody>
+                    </table>
+                    <MoreDiv onClick={_ => setRequestParams({ from_uid: linesInfo.endUid.toNumber() + 1, amount: 20 })}>load more down...</MoreDiv>
+                </LinesContainer>
+                :
+                <LoadingDotsContainer><LoadingDots /></LoadingDotsContainer>
+            }
+            {isOverlay ?
+                <InfoOverlay>
+                    {editedLines.length ?
+                        [
+                            <span key={0}>Your transactions are being prepared!</span>,
+                            <span key={1}>Lines edited: {editedLines.length}</span>,
+                            <span key={2}>Total MATIC: {editedLinesPrices.toString()}</span>,
+                            <span key={3}>Transactions count: {Math.ceil(editedLines.length / LINES_PER_TX)}</span>
+                        ]
+                        : <span>Please confirm all transactions.</span>}
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                        <LoadingDots />
+                    </div>
+                </InfoOverlay>
+                : ''
+            }
+        </PageContainer>
+    )
 }
