@@ -14,14 +14,12 @@ const PolygonLink = styled.a`
     color: var(--polygon)
 }
 `
-const GitHubLink = styled.a`
-&:hover {
-    .gh1 {
-       color: var(--github1);
-    }
-    .gh2 {
-        color: var(--github2);
-     }
+const GitHubLink = styled.span`
+.gh1:hover {
+    color: var(--github1);
+}
+.gh2:hover {
+    color: var(--github1);
 }
 `
 
@@ -34,7 +32,10 @@ export const Footer = () => {
                     <PolygonLink href={`https://polygonscan.com/address/${WALL_ADDRESS}`} target="_blank">PolygonScan</PolygonLink>
                 </li>
                 <li>
-                    <GitHubLink href="#" target="_blank"><span className="gh1">Git</span><span className="gh2">Hub</span></GitHubLink>
+                    <GitHubLink>
+                        <a className="gh1" href="https://github.com/me-gusta/polywall_frontend" target="_blank">Git</a>
+                        <a className="gh2" href="https://github.com/me-gusta/polywall_contracts" target="_blank">Hub</a>
+                    </GitHubLink>
                 </li>
             </NavUl>
         </FooterContainer>
