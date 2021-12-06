@@ -6,6 +6,7 @@ border: 1px solid var(--main-text);
 color: var(--main-text);
 font-size: var(--font-size);
 cursor: pointer;
+padding: 1px 15px;
 
 &:hover{
     color: var(--theme);

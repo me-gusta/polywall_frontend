@@ -23,7 +23,7 @@ export const GotToPage = () => {
     return (
         <GoToContainer>
             <span>Enter the line number</span>
-            <GoToInput type="number" value={lineNumber} onInput={(e: any) => setLineNumber(e.target.value)} />
+            <GoToInput type="number" value={lineNumber} onInput={(e: any) => setLineNumber(e.target.value)} placeholder={"•".repeat(50)}/>
             <FlatButton onClick={() => lineNumber && Number.parseInt(lineNumber) >= 0 ? navigate(`/wall/${lineNumber}/30`) : () => {}}>Go</FlatButton>
         </GoToContainer>
     )

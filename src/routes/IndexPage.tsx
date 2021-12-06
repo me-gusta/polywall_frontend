@@ -53,7 +53,7 @@ export const IndexPage = () => {
 
     useEffect(() => {
         setInterval(changeColors, 700)
-    })
+    }, [6])
 
     console.log(colorLetters);
     
