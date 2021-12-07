@@ -4,7 +4,7 @@ export const LINE_LENGTH = 100
 export const LINE_PRICE = 0.001
 export const LINES_PER_TX = 10
 
-export const WALL_ADDRESS = "0x20f3D2E55c4048878387eC69Cd00172F4dE18520"
+export const WALL_ADDRESS = "0x3F9C46cb59ba9Ea5E9b5F2863E6Df22b44B29887"
 export const WALL_ABI = new Interface([
   {
     "inputs": [
